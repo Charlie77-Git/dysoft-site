@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DYsoft — Mobile App Developer</title>
+<meta name="description" content="DYsoft is a registered Korean software business developing RSI Monitor & Simulator for Android. Based in Seoul, South Korea.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #112040;
+    --navy-light: #1a3060;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --white: #ffffff;
+    --gray-light: #f4f6fa;
+    --gray-mid: #8a96b0;
+    --text-dark: #1a2540;
+    --text-mid: #4a5578;
+    --border: #e0e4ef;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    background: var(--white);
+    color: var(--text-dark);
+    line-height: 1.8;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10,22,40,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    padding: 0 40px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 80px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 4vw, 54px);
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .hero h1 span { color: var(--gold); }
+
+  .hero-desc {
+    font-size: 16px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.8;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 2px;
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: background 0.2s;
+  }
+
+  .hero-cta:hover { background: var(--gold-light); }
+
+  /* Business card on right */
+  .biz-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    padding: 40px;
+  }
+
+  .biz-card-title {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .biz-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .biz-row:last-child { margin-bottom: 0; }
+
+  .biz-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    min-width: 120px;
+    padding-top: 2px;
+  }
+
+  .biz-value {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .biz-value a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .biz-value a:hover { text-decoration: underline; }
+
+  /* ── IDENTITY SECTION ── */
+  .identity-section {
+    padding: 100px 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 16px;
+    line-height: 1.25;
+  }
+
+  .gold-rule {
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    margin: 20px 0 40px;
+  }
+
+  .identity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .identity-text p {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+
+  .reg-table {
+    background: var(--gray-light);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .reg-table-header {
+    background: var(--navy);
+    padding: 14px 20px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .reg-row {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .reg-row:last-child { border-bottom: none; }
+
+  .reg-key {
+    width: 160px;
+    flex-shrink: 0;
+    padding: 14px 20px;
+    font-size: 12px;
+    color: var(--gray-mid);
+    letter-spacing: 0.04em;
+    border-right: 1px solid var(--border);
+    background: rgba(0,0,0,0.02);
+  }
+
+  .reg-val {
+    padding: 14px 20px;
+    font-size: 13px;
+    color: var(--text-dark);
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* ── APP SECTION ── */
+  .app-section {
+    background: var(--navy);
+    padding: 100px 80px;
+  }
+
+  .app-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .app-section .section-title { color: var(--white); }
+
+  .app-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: rgba(255,255,255,0.05);
+    margin-top: 60px;
+  }
+
+  .app-feat {
+    background: var(--navy);
+    padding: 36px 32px;
+    border-top: 2px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .app-feat:hover { border-top-color: var(--gold); }
+
+  .feat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: rgba(201,168,76,0.2);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .app-feat h3 {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .app-feat p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.8;
+  }
+
+  /* ── COMPLIANCE ── */
+  .compliance-section {
+    padding: 100px 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .compliance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .comp-card {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 32px 28px;
+    border-top: 3px solid var(--gold);
+  }
+
+  .comp-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(201,168,76,0.1);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .comp-icon svg {
+    width: 20px; height: 20px;
+    stroke: var(--gold);
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .comp-card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+  }
+
+  .comp-card p {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.8;
+  }
+
+  /* ── CONTACT ── */
+  .contact-section {
+    background: var(--navy-mid);
+    padding: 100px 80px;
+  }
+
+  .contact-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-section .section-title { color: var(--white); }
+
+  .contact-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    padding: 36px;
+  }
+
+  .contact-item {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    align-items: flex-start;
+  }
+
+  .contact-item:last-child { margin-bottom: 0; }
+
+  .contact-icon {
+    width: 36px; height: 36px;
+    border-radius: 4px;
+    background: rgba(201,168,76,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-icon svg {
+    width: 16px; height: 16px;
+    stroke: var(--gold);
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .contact-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 4px;
+  }
+
+  .contact-val {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+  }
+
+  .contact-val a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 40px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .footer-logo span { color: var(--gold); }
+
+  .footer-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.04em;
+    width: 100%;
+    text-align: center;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    margin-top: 8px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .identity-section, .compliance-section { padding: 60px 24px; }
+    .identity-grid { grid-template-columns: 1fr; }
+    .app-section, .contact-section { padding: 60px 24px; }
+    .app-grid { grid-template-columns: 1fr; }
+    .compliance-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">DY<span>soft</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#app">Our App</a></li>
+    <li><a href="#compliance">Compliance</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-badge">
+        <div class="badge-dot"></div>
+        Registered Software Business · Seoul, Korea
+      </div>
+      <h1>Independent<br>App Developer<br><span>DYsoft</span></h1>
+      <p class="hero-desc">
+        DYsoft is a registered sole proprietorship based in Seoul, South Korea,
+        specializing in Android mobile applications for the Korean stock market.
+      </p>
+      <a href="https://play.google.com/store/apps/details?id=com.vibecoding.rsi_monitor"
+         class="hero-cta" target="_blank">
+        View on Google Play ↗
+      </a>
+    </div>
+
+    <!-- Business Info Card -->
+    <div class="biz-card">
+      <div class="biz-card-title">Business Registration Details</div>
+      <div class="biz-row">
+        <div class="biz-label">Legal Name</div>
+        <div class="biz-value">DYsoft (디와이소프트)</div>
+      </div>
+      <div class="biz-row">
+        <div class="biz-label">Representative</div>
+        <div class="biz-value">Kim Hyung Chul (김형철)</div>
+      </div>
+      <div class="biz-row">
+        <div class="biz-label">Business Type</div>
+        <div class="biz-value">Sole Proprietorship<br><span style="font-size:12px; color:rgba(255,255,255,0.35);">Software Development &amp; Publishing</span></div>
+      </div>
+      <div class="biz-row">
+        <div class="biz-label">Address</div>
+        <div class="biz-value">402, 12, Teheran-ro 70-gil<br>Gangnam-gu, Seoul 06234<br>Republic of Korea</div>
+      </div>
+      <div class="biz-row">
+        <div class="biz-label">Registration No.</div>
+        <div class="biz-value">611-06-66804</div>
+      </div>
+      <div class="biz-row">
+        <div class="biz-label">E-Commerce No.</div>
+        <div class="biz-value">제2026-서울강남-02248호</div>
+      </div>
+      <div class="biz-row">
+        <div class="biz-label">Email</div>
+        <div class="biz-value"><a href="mailto:hcdaum@naver.com">hcdaum@naver.com</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="identity-section">
+    <div class="section-eyebrow">About DYsoft</div>
+    <h2 class="section-title">Who We Are</h2>
+    <div class="gold-rule"></div>
+    <div class="identity-grid">
+      <div class="identity-text">
+        <p>
+          DYsoft is an independent software development business registered
+          in Seoul, South Korea. Founded and operated by Kim Hyung Chul,
+          DYsoft focuses on building practical mobile tools for Korean retail investors.
+        </p>
+        <p>
+          Our flagship product, <strong>RSI Monitor &amp; Simulator</strong>, is published
+          on the Google Play Store and provides RSI-based market monitoring
+          for KOSPI and KOSDAQ listed companies.
+        </p>
+        <p>
+          DYsoft is fully registered with the Korean tax authority (국세청)
+          and holds a valid e-commerce business registration (통신판매업 신고)
+          as required under Korean law for paid mobile applications.
+        </p>
+      </div>
+
+      <div class="reg-table">
+        <div class="reg-table-header">Official Registration Summary</div>
+        <div class="reg-row">
+          <div class="reg-key">Business Name</div>
+          <div class="reg-val">DYsoft (디와이소프트)</div>
+        </div>
+        <div class="reg-row">
+          <div class="reg-key">Owner</div>
+          <div class="reg-val">Kim Hyung Chul</div>
+        </div>
+        <div class="reg-row">
+          <div class="reg-key">Address</div>
+          <div class="reg-val">402, 12, Teheran-ro 70-gil, Gangnam-gu, Seoul 06234, Korea</div>
+        </div>
+        <div class="reg-row">
+          <div class="reg-key">Tax Reg. No.</div>
+          <div class="reg-val">611-06-66804</div>
+        </div>
+        <div class="reg-row">
+          <div class="reg-key">Industry</div>
+          <div class="reg-val">Software Development &amp; Sales (KSIC 5812)</div>
+        </div>
+        <div class="reg-row">
+          <div class="reg-key">Google Play</div>
+          <div class="reg-val">com.vibecoding.rsi_monitor</div>
+        </div>
+        <div class="reg-row">
+          <div class="reg-key">AdMob Publisher</div>
+          <div class="reg-val">pub-1421931594456025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APP -->
+<div class="app-section" id="app">
+  <div class="app-inner">
+    <div class="section-eyebrow">Our Product</div>
+    <h2 class="section-title" style="color:var(--white);">RSI Monitor &amp; Simulator</h2>
+    <div class="gold-rule"></div>
+    <p style="font-size:15px; color:rgba(255,255,255,0.45); max-width:560px; line-height:1.8;">
+      An Android application providing real-time RSI monitoring and
+      backtesting simulation for Korean stock market investors.
+      Published on Google Play Store since May 2026.
+    </p>
+    <div class="app-grid">
+      <div class="app-feat">
+        <div class="feat-num">01</div>
+        <h3>Real-time RSI Monitoring</h3>
+        <p>Top 200 KOSPI &amp; KOSDAQ stocks by market cap, updated in real time with RSI and signal line values.</p>
+      </div>
+      <div class="app-feat">
+        <div class="feat-num">02</div>
+        <h3>Buy / Sell Signal Reference</h3>
+        <p>Multi-indicator analysis combining RSI, MACD, Bollinger Bands, and moving averages as a reference tool.</p>
+      </div>
+      <div class="app-feat">
+        <div class="feat-num">03</div>
+        <h3>5-Year Backtest</h3>
+        <p>RSI-based strategy simulation over 5 years of historical data. For informational purposes only.</p>
+      </div>
+      <div class="app-feat">
+        <div class="feat-num">04</div>
+        <h3>Push Notifications</h3>
+        <p>Real-time alerts when RSI crosses oversold (≤30) or overbought (≥70) thresholds.</p>
+      </div>
+      <div class="app-feat">
+        <div class="feat-num">05</div>
+        <h3>Watchlist</h3>
+        <p>Register and track personal watchlist stocks with custom RSI signal notifications.</p>
+      </div>
+      <div class="app-feat">
+        <div class="feat-num">06</div>
+        <h3>Monthly Subscription</h3>
+        <p>Freemium model with a KRW 2,000/month premium subscription processed via Google Play billing.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPLIANCE -->
+<section id="compliance">
+  <div class="compliance-section">
+    <div class="section-eyebrow">Legal &amp; Compliance</div>
+    <h2 class="section-title">Regulatory Compliance</h2>
+    <div class="gold-rule"></div>
+    <p style="font-size:15px; color:var(--text-mid); max-width:600px; line-height:1.8;">
+      DYsoft operates in full compliance with Korean law and Google Play policies.
+    </p>
+    <div class="compliance-grid">
+      <div class="comp-card">
+        <div class="comp-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3>Business Registration</h3>
+        <p>Registered sole proprietorship with the National Tax Service of Korea (국세청). Tax registration number: 611-06-66804.</p>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>E-Commerce Registration</h3>
+        <p>Holds a valid 통신판매업 신고 (e-commerce business registration) as required under the Korean E-Commerce Act for paid apps.</p>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Privacy Policy</h3>
+        <p>Maintains a publicly accessible Korean-language privacy policy compliant with PIPA (개인정보보호법) and Google Play requirements.</p>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3>Google Play Billing</h3>
+        <p>In-app subscription processed exclusively through Google Play's billing system. No direct payment data is handled by DYsoft.</p>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <h3>AdMob Integration</h3>
+        <p>Monetized via Google AdMob (Publisher ID: pub-1421931594456025). app-ads.txt hosted at the registered developer domain.</p>
+      </div>
+      <div class="comp-card">
+        <div class="comp-icon">
+          <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <h3>Investment Disclaimer</h3>
+        <p>All signals are reference indicators only. The app is not a licensed financial advisory service and does not constitute investment advice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="section-eyebrow">Contact</div>
+      <h2 class="section-title">Get in Touch</h2>
+      <div class="gold-rule"></div>
+      <p style="font-size:15px; color:rgba(255,255,255,0.45); line-height:1.9;">
+        For business inquiries, Google Play policy questions,
+        or developer verification, please contact us via email.
+        We respond within 3 business days.
+      </p>
+      <br>
+      <a href="https://play.google.com/store/apps/details?id=com.vibecoding.rsi_monitor"
+         class="hero-cta" target="_blank" style="display:inline-flex;">
+        View App on Google Play ↗
+      </a>
+    </div>
+
+    <div class="contact-card">
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Representative</div>
+          <div class="contact-val">Kim Hyung Chul (김형철)<br>Sole Proprietor, DYsoft</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-val"><a href="mailto:hcdaum@naver.com">hcdaum@naver.com</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Business Address</div>
+          <div class="contact-val">
+            402, 12, Teheran-ro 70-gil<br>
+            Gangnam-gu, Seoul 06234<br>
+            Republic of Korea
+          </div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Privacy Policy</div>
+          <div class="contact-val">
+            <a href="https://charlie77-git.github.io/rsi-monitor-privacy/privacy-policy.html" target="_blank">
+              View Privacy Policy ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">DY<span>soft</span></div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#app">App</a></li>
+    <li><a href="#compliance">Compliance</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://charlie77-git.github.io/rsi-monitor-privacy/privacy-policy.html" target="_blank">Privacy Policy</a></li>
+    <li><a href="https://play.google.com/store/apps/details?id=com.vibecoding.rsi_monitor" target="_blank">Google Play</a></li>
+  </ul>
+  <div class="footer-copy">
+    © 2026 DYsoft (김형철). Business Registration No. 611-06-66804 · Seoul, Republic of Korea · All rights reserved.
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+  });
+});
+</script>
+
+</body>
+</html>
